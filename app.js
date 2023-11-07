@@ -20,6 +20,10 @@ app.get('/',(req,res)=>{
     res.render('index');
 });
 
+app.get('*',(req,res)=>{
+    res.render('index');
+});
+
 app.listen(port,()=>{
     console.log('Serviodor corriendo en el puerto: ',port);
 });
