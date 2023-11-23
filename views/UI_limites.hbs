@@ -7,7 +7,7 @@
 <html>
 
 <head>
-	<title>Interfaz de la calculadora</title>
+	<title>Evaluadora de limites y funciones</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="assets/css/main.css" />
@@ -20,7 +20,7 @@
 
 	<!-- Header -->
 	<header id="header">
-		<a href="index.html" class="title">Calculadora de limites laterales</a>
+		<a href="index.html" class="title">Evaluadora de limites y funciones</a>
 		<nav>
 			<ul>
 				<li><a href="/">Home</a></li>
@@ -34,24 +34,144 @@
 		<!-- Main -->
 		<section id="main" class="wrapper">
 			<div class="inner">
-				<h1 class="major">A Generic Page</h1>
-				<form action="/public/assets/js/calcu_limites.js" method="post">
-					<ul>
-						<li>
-							<label for="name"></label>
-							<input type="text" id="name" name="user_name" />
-						</li>
-						<li>
-							<label for="mail">Correo electrónico:</label>
-							<input type="email" id="mail" name="user_mail" />
-						</li>
-						<li>
-							<label for="msg">Mensaje:</label>
-							<textarea id="msg" name="user_message"></textarea>
-						</li>
-					</ul>
-				</form>
-			</div>
+
+				<body>
+
+					<h2>Evaluadora de limites y funciones</h2>
+
+					<label for="numx">Valor al que tiende x:</label>
+					<input type="text" id="numx">
+
+					<br>
+
+					<label for="num1">Funcion: (numerador)</label>
+					<input type="text" id="num1">
+
+					<br>
+
+					<label for="num2">Funcion: (denominador)</label>
+					<input type="text" id="num2">
+
+					<br>
+
+					<button onclick="evaluarExpresion()">Evaluar la funcion</button>
+					
+					<button onclick="evaluarCociente()">Evaluar una funcion en consiente</button>
+					
+					<button onclick="evaluarLimiteIzq()">Evaluar el limite por la izquierda</button>
+					
+					<button onclick="evaluarLimiteDerch()">Evaluar el limite por la derecha</button>
+					
+					<button onclick="evaluarLimiteCocienteIzq()">Evaluar el limite de un cociente por la
+						izquierda</button>
+						
+					<button onclick="evaluarLimiteCocienteDerecha()">Evaluar el limite de un cociente por la
+						derecha</button>
+					
+					<br>
+
+					<h3>Resultado: <span id="resultado">-</span></h3>
+					<h3>Resultado: <span id="resultado2">-</span></h3>
+
+					<script>
+						function evaluarExpresion() {
+							var resultado2 = "-";
+							document.getElementById('resultado2').innerText = resultado2;
+							var expresion = document.getElementById('num1').value;
+							var x = parseFloat(document.getElementById('numx').value);
+							expresion = expresion.replace(/x/g, x);
+							var resultado = eval(expresion);
+							document.getElementById('resultado').innerText = resultado;
+						}
+
+						function evaluarCociente() {
+							var expresion = document.getElementById('num1').value;
+							var expresion2 = document.getElementById('num2').value;
+							var x = parseFloat(document.getElementById('numx').value);
+
+							expresion = expresion.replace(/x/g, x);
+							expresion2 = expresion2.replace(/x/g, x);
+
+							var resultadoexp1 = eval(expresion);
+							var resultadoexp2 = eval(expresion2);
+							var resultado = resultadoexp1 / resultadoexp2;
+							if (resultadoexp2 == 0) {
+								var resultado_INF = 'No esta definido';
+								document.getElementById('resultado').innerText = resultado_INF;
+								var resultado2 = "-";
+								document.getElementById('resultado2').innerText = resultado2;
+							} else {
+								document.getElementById('resultado').innerText = resultado;
+								var resultado2 = "-";
+								document.getElementById('resultado2').innerText = resultado2;
+							}
+						}
+
+						function evaluarLimiteIzq() {
+							var expresion = document.getElementById('num1').value;
+							var x = parseFloat(document.getElementById('numx').value);
+							x = x - 0.0001;
+							//Por la izquierda
+							var numeroRendo = x.toFixed(x, 2);
+
+							expresion = expresion.replace(/x/g, numeroRendo);
+
+							var resultadoexp1 = eval(expresion);
+							var resultado = 'La funcion evaluada por la izquierda tiende a :' + resultadoexp1;
+							document.getElementById('resultado').innerText = resultado;
+						}
+
+						function evaluarLimiteDerch() {
+							var expresion = document.getElementById('num1').value;
+							var x = parseFloat(document.getElementById('numx').value);
+							x = x + 0.0001;
+							//Por la izquierda
+							var numeroRendo = x.toFixed(x, 2);
+
+							expresion = expresion.replace(/x/g, numeroRendo);
+
+							var resultadoexp1 = eval(expresion);
+							var resultado = 'La funcion evaluada por la izquierda tiende a :' + resultadoexp1;
+							document.getElementById('resultado2').innerText = resultado;
+						}
+
+						function evaluarLimiteCocienteIzq() {
+							var expresion = document.getElementById('num1').value;
+							var expresion2 = document.getElementById('num2').value;
+							var x = parseFloat(document.getElementById('numx').value);
+							x = x - 0.0001;
+
+							var numeroRendo = x.toFixed(x, 2);
+
+							expresion = expresion.replace(/x/g, numeroRendo);
+
+							var resultadoexp1 = eval(expresion);
+							var resultadoexp2 = eval(expresion2);
+							var division = resultadoexp1 / resultadoexp2;
+							var resultado = 'La funcion evaluada por la izquierda tiende a :' + division;
+							
+							document.getElementById('resultado').innerText = resultado;
+						}
+
+						function evaluarLimiteCocienteDerecha() {
+							var expresion = document.getElementById('num1').value;
+							var expresion2 = document.getElementById('num2').value;
+							var x = parseFloat(document.getElementById('numx').value);
+							x = x + 0.0001;
+
+							var numeroRendo = x.toFixed(x, 2);
+
+							expresion = expresion.replace(/x/g, numeroRendo);
+
+							var resultadoexp1 = eval(expresion);
+							var resultadoexp2 = eval(expresion2);
+							var division = resultadoexp1 / resultadoexp2;
+							var resultado = 'La funcion evaluada por la derecha tiende a :' + division;
+							document.getElementById('resultado2').innerText = resultado;
+						}
+					</script>
+
+				</body>
 		</section>
 	</div>
 
@@ -73,7 +193,7 @@
 	<script src="assets/js/breakpoints.min.js"></script>
 	<script src="assets/js/util.js"></script>
 	<script src="assets/js/main.js"></script>
+	<script src="assets/js/calcu_limites.js"></script>
 
 </body>
-
 </html>
